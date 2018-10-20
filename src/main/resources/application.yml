@@ -11,3 +11,10 @@ spring:
     show-sql: true
     generate-ddl: true
     database: POSTGRESQL
+management:
+ server:
+   port: 8091
+ endpoints:
+   web:
+     exposure:
+       include: beans,env,metrics
