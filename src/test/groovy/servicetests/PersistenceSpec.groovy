@@ -1,23 +1,22 @@
 package servicetests
 
 import com.example.documents.DemoApplication
+import com.example.documents.controller.AccountController
 import com.example.documents.controller.AccountDTO
 import com.example.documents.model.Account
-import com.example.documents.repository.AccountRepository
 import com.example.documents.service.AccountService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.FilterType
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
-import org.springframework.http.HttpEntity
-import org.springframework.test.context.ContextConfiguration
-import org.springframework.web.client.RestTemplate
 import spock.lang.Specification
+import util.MeineMockConfiguration
 
 @EnableJpaRepositories(basePackages = "com.example.documents")
-@SpringBootTest(classes = DemoApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ComponentScan(basePackages = "com.example.documents", excludeFilters  = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = AccountService.class ))
+@SpringBootTest(classes =  [DemoApplication.class, MeineMockConfiguration.class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PersistenceSpec extends Specification {
 
 
@@ -25,9 +24,12 @@ class PersistenceSpec extends Specification {
     AccountService accountService
 
     @Autowired
+    AccountController accountController
+
+    @Autowired
     TestRestTemplate template
 
-    def 'ein Account kann in der DB gespeichert werden'(){
+    /*def 'ein Account kann in der DB gespeichert werden'(){
 
         given: 'an account wiht customer information'
         Account account = new Account()
@@ -49,7 +51,8 @@ class PersistenceSpec extends Specification {
         foundAcc.vorname == account.vorname
         foundAcc.nachname == account.nachname
         foundAcc.telefonNummer == account.telefonNummer
-    }
+    }*/
+
     def 'wenn ich den controller aufrufe, kann ich dann das repository intercepten'(){
         given: 'account'
         Account account = new Account()
@@ -67,11 +70,25 @@ class PersistenceSpec extends Specification {
         accountDTO.setVorname("test")
         accountDTO.setTelefonNummer("015112345")
         accountDTO.setId(accountId2)
-        
+
         when: 'invoking the ctontroller'
         template.postForLocation('/accountPost', accountDTO)
 
         then: 'the service is called'
         1 * accountService.saveAccount(_)
     }
+
+    def 'ein normaler Spring boot test testet interaktion der beans'(){
+
+        given:
+        System.out.println(" in tests: accountController: " + accountController.toString() + " \n accountService " + accountService.toString())
+        def accContrMock = Mock(AccountService)
+
+        when:
+        accountController.getAllAccounts()
+
+        then:
+        1 * accountService.getAllAccounts()
+    }
+
 }

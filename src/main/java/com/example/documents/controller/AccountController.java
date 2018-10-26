@@ -2,6 +2,8 @@ package com.example.documents.controller;
 
 import com.example.documents.model.Account;
 import com.example.documents.service.AccountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -15,6 +17,8 @@ import java.util.List;
 @RestController
 public class AccountController {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
+
     @Autowired
     private AccountService accountService;
 
@@ -23,6 +27,7 @@ public class AccountController {
     @ResponseBody
     @RequestMapping("/accounts")
     public List<Account> getAllAccounts(){
+        LOGGER.info("getAccounts on accountController in " + this.toString() +" to service " + accountService.toString());
         return accountService.getAllAccounts();
     }
 
