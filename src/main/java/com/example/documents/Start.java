@@ -1,6 +1,7 @@
 package com.example.documents;
 
 import com.example.documents.model.Account;
+import com.example.documents.service.AccountService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class Start {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private AccountService accountService;
+
     @PostConstruct
     public void showRichard() throws JsonProcessingException {
         Account richard = new Account();
@@ -25,5 +29,6 @@ public class Start {
         richard.setId(UUID.randomUUID());
 
         System.out.println(objectMapper.writeValueAsString(richard));
+        accountService.saveAccount(richard);
     }
 }
