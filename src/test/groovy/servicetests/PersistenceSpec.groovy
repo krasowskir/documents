@@ -2,7 +2,7 @@ package servicetests
 
 import com.example.documents.DemoApplication
 import com.example.documents.controller.AccountController
-import com.example.documents.controller.AccountDTO
+
 import com.example.documents.model.Account
 import com.example.documents.service.AccountService
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,6 +11,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.FilterType
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import spock.lang.Ignore
 import spock.lang.Specification
 import util.MeineMockConfiguration
 
@@ -53,6 +54,7 @@ class PersistenceSpec extends Specification {
         foundAcc.telefonNummer == account.telefonNummer
     }*/
 
+    /*@Ignore
     def 'wenn ich den controller aufrufe, kann ich dann das repository intercepten'(){
         given: 'account'
         Account account = new Account()
@@ -76,7 +78,7 @@ class PersistenceSpec extends Specification {
 
         then: 'the service is called'
         1 * accountService.saveAccount(_)
-    }
+    }*/
 
     def 'ein normaler Spring boot test testet interaktion der beans'(){
 

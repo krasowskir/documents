@@ -111,7 +111,7 @@
 							<directory>images</directory>
 						</resource>
 					</resources>
-					<outputDirectory>target/classes</outputDirectory>
+					<outputDirectory>target/classes/images</outputDirectory>
 				</configuration>
 			</plugin>
 
