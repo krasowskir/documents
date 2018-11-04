@@ -1,13 +1,17 @@
+
+---
 server:
   port: 8090
 spring:
+  profile: prod
+  datasource:
+    platform: postgres
   jpa:
     show-sql: true
     generate-ddl: true
     database: POSTGRESQL
+
 management:
- server:
-   port: 8091
  endpoints:
    web:
      exposure:
@@ -16,3 +20,9 @@ management:
 logging:
   level:
     root: INFO
+
+---
+spring:
+  profiles: dev
+server:
+  port: 8090

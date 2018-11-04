@@ -16,7 +16,6 @@ public class DevConfiguration {
     public DataSource dataSource(){
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
-                .addScripts("classpath:schema.sql")
                 .build();
     }
 }

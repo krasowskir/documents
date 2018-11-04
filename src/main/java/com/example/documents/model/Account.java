@@ -1,6 +1,7 @@
 package com.example.documents.model;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.UUID;
 
 @Entity
@@ -10,13 +11,16 @@ public class Account {
     @Id
     private UUID id;
 
-    private String vorname;
+    private String name;
 
-    private String nachname;
+    private Integer alter;
 
     private String telefonNummer;
 
     private String emailAdresse;
+
+    @Lob
+    private byte[] image;
 
     public UUID getId() {
         return id;
@@ -26,20 +30,20 @@ public class Account {
         this.id = id;
     }
 
-    public String getVorname() {
-        return vorname;
+    public String getName() {
+        return name;
     }
 
-    public void setVorname(String vorname) {
-        this.vorname = vorname;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getNachname() {
-        return nachname;
+    public Integer getAlter() {
+        return alter;
     }
 
-    public void setNachname(String nachname) {
-        this.nachname = nachname;
+    public void setAlter(Integer alter) {
+        this.alter = alter;
     }
 
     public String getTelefonNummer() {
@@ -56,5 +60,25 @@ public class Account {
 
     public void setEmailAdresse(String emailAdresse) {
         this.emailAdresse = emailAdresse;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", alter=" + alter +
+                ", telefonNummer='" + telefonNummer + '\'' +
+                ", emailAdresse='" + emailAdresse + '\'' +
+                ", image=" + Arrays.toString(image) +
+                '}';
     }
 }

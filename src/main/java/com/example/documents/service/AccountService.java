@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.util.List;
 
-@Service("meinAccountService")
+@Service
 public class AccountService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(AccountService.class);
@@ -33,6 +33,7 @@ public class AccountService {
         return accounts;
     }
 
+    //ToDo: does not work, since image dir is not created in classpath
     public void copyFileToWorkspace(MultipartFile inputFile) throws IOException {
         Resource PICTURES_DIR = new ClassPathResource("images");
         String filename = inputFile.getOriginalFilename();

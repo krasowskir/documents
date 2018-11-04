@@ -105,14 +105,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<configuration>
+				<!--<configuration>
 					<resources>
 						<resource>
 							<directory>images</directory>
 						</resource>
 					</resources>
 					<outputDirectory>target/classes/images</outputDirectory>
-				</configuration>
+				</configuration>-->
 			</plugin>
 
 			<plugin>

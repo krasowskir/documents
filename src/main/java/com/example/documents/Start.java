@@ -19,9 +19,9 @@ public class Start {
     @Autowired
     private AccountService accountService;
 
-    @PostConstruct
+
     public void showRichard() throws JsonProcessingException {
-        Account richard = new Account();
+        /*Account richard = new Account();
         richard.setVorname("Richard");
         richard.setNachname("Krasowski");
         richard.setEmailAdresse("testi@test.de");
@@ -29,6 +29,6 @@ public class Start {
         richard.setId(UUID.randomUUID());
 
         System.out.println(objectMapper.writeValueAsString(richard));
-        accountService.saveAccount(richard);
+        accountService.saveAccount(richard);*/
     }
 }
