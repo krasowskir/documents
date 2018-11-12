@@ -11,6 +11,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.FilterType
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import spock.lang.Ignore
 import spock.lang.Specification
 import util.MeineMockConfiguration;
 
@@ -30,7 +31,7 @@ class LayerSpec extends Specification{
     @Autowired
     TestRestTemplate template
 
-
+    @Ignore
     def 'wenn ich den controller aufrufe, kann ich dann das repository intercepten'(){
         given: 'account'
         AccountDto account = new AccountDto()

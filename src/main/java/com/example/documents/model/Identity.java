@@ -2,31 +2,24 @@ package com.example.documents.model;
 
 import org.hibernate.annotations.Cascade;
 
-import javax.persistence.*;
-import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
+import static org.hibernate.annotations.CascadeType.MERGE;
 import static org.hibernate.annotations.CascadeType.PERSIST;
 
 @Entity
 public class Identity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
     private String username;
     private String password;
 
-    @OneToOne
-    @Cascade(value = PERSIST)
+    @OneToOne(fetch = FetchType.EAGER)
+    @Cascade(value = { PERSIST,MERGE})
     private Account account;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
@@ -35,6 +28,7 @@ public class Identity {
     public void setUsername(String username) {
         this.username = username;
     }
+
 
     public String getPassword() {
         return password;
@@ -55,10 +49,36 @@ public class Identity {
     @Override
     public String toString() {
         return "Identity{" +
-                "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", account=" + account +
                 '}';
     }
+    //UserDetails
+
+    /*@Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Arrays.asList(new SimpleGrantedAuthority("READER"));
+    }*/
+
 }

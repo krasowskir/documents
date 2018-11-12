@@ -5,7 +5,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;
 
-public interface IdentityRepository extends CrudRepository<Identity, UUID> {
+public interface IdentityRepository extends CrudRepository<Identity, String> {
 
     Identity findByUsernameAndPassword(String username, String password);
+
 }

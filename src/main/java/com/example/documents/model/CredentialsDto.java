@@ -20,4 +20,12 @@ public class CredentialsDto {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "CredentialsDto{" +
+                "benutzername='" + benutzername + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

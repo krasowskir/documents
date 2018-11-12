@@ -9,11 +9,8 @@ import com.example.documents.repository.IdentityRepository
 import com.example.documents.service.AccountService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.context.annotation.ComponentScan
-import org.springframework.context.annotation.FilterType
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import spock.lang.Specification
-import util.MeineMockConfiguration
 
 @EnableJpaRepositories(basePackages = "com.example.documents")
 @SpringBootTest(classes = [DemoApplication.class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -77,7 +74,7 @@ class PersistenceSpec extends Specification {
         identityRepository.save(meineId)
 
         then:
-        identityRepository.findByUsernameAndPassword("richard", "test123") != null
+        identityRepository.findById("richard") != null
 
     }
 }

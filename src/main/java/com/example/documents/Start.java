@@ -1,34 +1,36 @@
 package com.example.documents;
 
-import com.example.documents.model.Account;
-import com.example.documents.service.AccountService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.documents.model.Identity;
+import com.example.documents.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.UUID;
 
 @Component
 public class Start {
 
     @Autowired
-    private ObjectMapper objectMapper;
+    UserService userService;
 
-    @Autowired
-    private AccountService accountService;
+    @PostConstruct
+    public void addUsersToDb(){
 
+        Identity richard = new Identity();
+        richard.setUsername("richard");
+        richard.setPassword("test1234");
 
-    public void showRichard() throws JsonProcessingException {
-        /*Account richard = new Account();
-        richard.setVorname("Richard");
-        richard.setNachname("Krasowski");
-        richard.setEmailAdresse("testi@test.de");
-        richard.setTelefonNummer("123456789");
-        richard.setId(UUID.randomUUID());
+        Identity toni = new Identity();
+        toni.setUsername("toni");
+        toni.setPassword("flusensieb");
 
-        System.out.println(objectMapper.writeValueAsString(richard));
-        accountService.saveAccount(richard);*/
+        userService.saveUser(richard);
+        userService.saveUser(toni);
+
+        for (Identity elem : userService.findAllUsers()){
+            System.out.println("Identity: " + elem);
+        }
     }
 }
