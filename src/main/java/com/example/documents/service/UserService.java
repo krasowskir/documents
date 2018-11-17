@@ -27,6 +27,8 @@ public class UserService implements UserDetailsService {
         Identity toPersist = new Identity();
         toPersist.setUsername(source.getUsername());
         toPersist.setPassword(passwordEncoder.encode(source.getPassword()));
+        toPersist.setAccount(source.getAccount());
+
         return identityRepository.save(toPersist);
     }
 

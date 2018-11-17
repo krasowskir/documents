@@ -31,6 +31,12 @@ public class AccountController {
         return accountService.getAllAccounts();
     }
 
+    @ResponseBody
+    @GetMapping("/account/id/{accountUuid}")
+    public Account getAccount(@PathVariable("accountUuid") String accountUuid ){
+        return accountService.getAccountById(UUID.fromString(accountUuid)).get();
+    }
+
     @RequestMapping(value = "/accountPost", method = RequestMethod.POST)
     public void postAccounts(AccountDto accountDto, BindingResult bindingResult) throws IOException {
         if (bindingResult.hasErrors()) {
@@ -39,6 +45,16 @@ public class AccountController {
         System.out.println("Testi: " + accountDto);
 
         accountService.saveAccount(accountDto.toAccount());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/account/image/id/{accountId}", method = RequestMethod.GET)
+    public byte[] getImageForAccountId(@PathVariable("accountId") UUID accountId){
+        byte[] img =  accountService.getImageFromAccount(accountId);
+        if (img == null){
+            System.out.println("img is null");
+        }
+        return img;
     }
 
     private static String getFileExtension(String name) {

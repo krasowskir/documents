@@ -1,6 +1,5 @@
 package com.example.documents.service;
 
-import com.example.documents.controller.AccountController;
 import com.example.documents.model.Account;
 import com.example.documents.repository.AccountRepository;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -13,7 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AccountService {
@@ -33,6 +36,17 @@ public class AccountService {
         return accounts;
     }
 
+    public byte[] getImageFromAccount(UUID toFind) {
+        //return accountRepository.findById(toFind).get().getImage();
+        try {
+            Resource myImage = new ClassPathResource("zweites_avatar_2.png");
+            return Files.readAllBytes(Paths.get(myImage.getURI()));
+        } catch (Exception e){
+            System.out.println("Fehler während Bilderholens: " + e.getStackTrace());
+        }
+        return null;
+    }
+
     //ToDo: does not work, since image dir is not created in classpath
     public void copyFileToWorkspace(MultipartFile inputFile) throws IOException {
         Resource PICTURES_DIR = new ClassPathResource("images");
@@ -43,6 +57,10 @@ public class AccountService {
         InputStream inStr = inputFile.getInputStream();
         OutputStream fout = new FileOutputStream(tmpFile);
         IOUtils.copy(inStr, fout);
+    }
+
+    public Optional<Account> getAccountById(UUID accountUuid){
+        return accountRepository.findById(accountUuid);
     }
 
     private static String getFileExtension(String name){

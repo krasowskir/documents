@@ -76,5 +76,10 @@ class PersistenceSpec extends Specification {
         then:
         identityRepository.findById("richard") != null
 
+        and:
+        def foundAccount = identityRepository.findById("richard").get().getAccount()
+        foundAccount.name == "Richard Krasowski"
+        foundAccount.telefonNummer == "015112345"
+
     }
 }

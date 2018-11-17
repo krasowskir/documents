@@ -1,5 +1,6 @@
 package com.example.documents.configuration;
 
+import com.example.documents.exceptionhandler.LoginFailureHandler;
 import com.example.documents.repository.IdentityRepository;
 import com.example.documents.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    IdentityRepository identityRepository;
+    private LoginFailureHandler loginFailureHandler;
 
     @Autowired
-    UserService userService;
+    private IdentityRepository identityRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
