@@ -6,6 +6,7 @@ import com.example.documents.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,9 @@ public class Start {
 
     @Autowired
     private ApplicationContext applicationContext;
+
+    @Autowired
+    private Environment env;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -58,6 +62,7 @@ public class Start {
         richard.setAccount(account);
 
         System.out.println(objectMapper.writeValueAsString(account));
+        System.out.println("\n===environment: === " + env.getProperty("spring.datasource.url"));
 
         userService.saveUser(richard);
         userService.saveUser(toni);
