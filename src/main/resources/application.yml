@@ -13,12 +13,13 @@ spring:
 
 management:
  endpoints:
+   enabled-by-default: true
    web:
      cors:
       allowed-origins: '*'
       allowed-methods: GET,POST
      exposure:
-       include: beans,env,metrics
+       include: beans,env,metrics, health, info
 
 logging:
   level:
