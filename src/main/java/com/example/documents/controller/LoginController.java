@@ -22,8 +22,6 @@ public class LoginController {
     @Autowired
     AccountRepository accountRepository;
 
-    private Resource resource = new ClassPathResource("testBilder/zweites_avatar_2.png");
-
     private Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
 
@@ -35,16 +33,7 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public Account getLogin(HttpServletRequest request) throws IOException {
+    public void getLogin(HttpServletRequest request) throws IOException {
 
-        Account toni = new Account();
-        toni.setName("toni");
-        toni.setId(UUID.randomUUID());
-        toni.setAlter(26);
-        toni.setTelefonNummer("015140460849");
-        toni.setEmailAdresse("krtoni@arcor.de");
-        //toni.setImage(Files.readAllBytes(resource.getFile().toPath()));
-        LOGGER.info("calling getLogin, returning {}", toni);
-        return toni;
     }
 }

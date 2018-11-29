@@ -11,7 +11,6 @@ public class AccountDto {
     private String alter;
     private String telefonNummer;
     private String email;
-    private MultipartFile imageFile;
 
     public String getName() {
         return name;
@@ -37,14 +36,6 @@ public class AccountDto {
         this.email = email;
     }
 
-    public MultipartFile getImageFile() {
-        return imageFile;
-    }
-
-    public void setImageFile(MultipartFile imageFile) {
-        this.imageFile = imageFile;
-    }
-
     public String getTelefonNummer() {
         return telefonNummer;
     }
@@ -60,21 +51,6 @@ public class AccountDto {
                 ", alter='" + alter + '\'' +
                 ", telefonNummer='" + telefonNummer + '\'' +
                 ", email='" + email + '\'' +
-                ", imageFile=" + imageFile +
                 '}';
-    }
-
-    public Account toAccount() throws IOException {
-        Account destAccount = new Account();
-        destAccount.setId(UUID.randomUUID());
-        destAccount.setTelefonNummer(this.getTelefonNummer());
-        destAccount.setAlter(Integer.parseInt(this.getAlter()));
-        destAccount.setName(this.getName());
-        destAccount.setEmailAdresse(this.email);
-        if(this.imageFile.getBytes() != null) {
-            destAccount.setImage(this.imageFile.getBytes());
-        }
-
-        return destAccount;
     }
 }

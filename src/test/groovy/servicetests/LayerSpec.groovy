@@ -48,6 +48,7 @@ class LayerSpec extends Specification{
         1 * accountService.saveAccount(_)
     }
 
+    @Ignore
     def 'ein normaler Spring boot test testet interaktion der beans'(){
 
         given:

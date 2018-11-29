@@ -1,6 +1,7 @@
 package com.example.documents.model;
 
 import javax.persistence.*;
+import java.sql.Blob;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ public class Account {
 
     private String name;
 
-    private Integer alter;
+    private int alter;
 
     private String telefonNummer;
 
@@ -38,11 +39,11 @@ public class Account {
         this.name = name;
     }
 
-    public Integer getAlter() {
+    public int getAlter() {
         return alter;
     }
 
-    public void setAlter(Integer alter) {
+    public void setAlter(int alter) {
         this.alter = alter;
     }
 

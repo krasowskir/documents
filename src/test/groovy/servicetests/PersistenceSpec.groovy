@@ -10,8 +10,12 @@ import com.example.documents.service.AccountService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import org.springframework.test.annotation.DirtiesContext
+import org.springframework.test.annotation.Rollback
 import spock.lang.Specification
+import spock.lang.Unroll
 
+//DirtiesContext affects only the applicationContext cache, not db state
 @EnableJpaRepositories(basePackages = "com.example.documents")
 @SpringBootTest(classes = [DemoApplication.class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PersistenceSpec extends Specification {
@@ -24,12 +28,16 @@ class PersistenceSpec extends Specification {
     AccountRepository accountRepository
 
     @Autowired
-    AccountController accountController
-
-    @Autowired
     IdentityRepository identityRepository
 
+    def cleanup(){
 
+        //in this order, because of foreign-key relationship
+        identityRepository.deleteAll();
+        accountRepository.deleteAll();
+    }
+
+    //@rollback, does not work
     def 'ein Account kann in der DB gespeichert werden'() {
 
         given: 'an account wiht customer information'
@@ -42,7 +50,7 @@ class PersistenceSpec extends Specification {
         System.out.println("id: " + accountId)
 
         when: 'persisting the account'
-        accountRepository.save(account)
+        accountService.saveAccount(account)
 
         then: 'account should be able to be found by uuid'
         Account foundAcc = accountRepository.findById(accountId).get()
@@ -52,7 +60,6 @@ class PersistenceSpec extends Specification {
         foundAcc.alter == account.alter
         foundAcc.telefonNummer == account.telefonNummer
     }
-
 
     def ' eine identity kann gepsiechert werden'() {
         given:

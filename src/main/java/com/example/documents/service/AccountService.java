@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -26,6 +27,7 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Transactional
     public Account saveAccount(Account toSave){
         return accountRepository.save(toSave);
     }
@@ -37,14 +39,8 @@ public class AccountService {
     }
 
     public byte[] getImageFromAccount(UUID toFind) {
-        //return accountRepository.findById(toFind).get().getImage();
-        try {
-            Resource myImage = new ClassPathResource("zweites_avatar_2.png");
-            return Files.readAllBytes(Paths.get(myImage.getURI()));
-        } catch (Exception e){
-            System.out.println("Fehler während Bilderholens: " + e.getStackTrace());
-        }
-        return null;
+        return accountRepository.findById(toFind).get().getImage();
+
     }
 
     //ToDo: does not work, since image dir is not created in classpath
