@@ -2,14 +2,20 @@ package com.example.documents.service;
 
 import com.example.documents.model.Account;
 import com.example.documents.repository.AccountRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.protocol.types.Field;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -25,10 +31,22 @@ public class AccountService {
     private final Logger LOGGER = LoggerFactory.getLogger(AccountService.class);
 
     @Autowired
+    private KafkaTemplate kafkaTemplate;
+
+    @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Transactional
     public Account saveAccount(Account toSave){
+
+        try {
+            ListenableFuture result = kafkaTemplate.send("myTopic", UUID.randomUUID().toString(), objectMapper.writeValueAsString(toSave));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return accountRepository.save(toSave);
     }
 
