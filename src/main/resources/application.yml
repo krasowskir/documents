@@ -12,8 +12,8 @@ spring:
     generate-ddl: true
     database: POSTGRESQL
 management:
- server:
-   port: 8091
+ server: 127.0.0.1
+ port: 8091
  endpoints:
    web:
      exposure:
